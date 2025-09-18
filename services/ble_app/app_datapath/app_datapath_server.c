@@ -54,6 +54,7 @@ struct app_datapath_server_env_tag app_datapath_server_env = {
     BLE_INVALID_CONNECTION_INDEX, false};
 
 static app_datapath_server_tx_done_t tx_done_callback = NULL;
+static app_datapath_server_rx_cb_t rx_callback = NULL;
 
 /*
  * GLOBAL FUNCTION DEFINITIONS
@@ -217,11 +218,13 @@ static int app_datapath_server_rx_data_received_handler(
     ke_msg_id_t const msgid, struct ble_datapath_rx_data_ind_t *param,
     ke_task_id_t const dest_id, ke_task_id_t const src_id) {
 
-  // loop back the received data
-  // app_datapath_server_send_data(param->data, param->length);
-
   TRACE(2, "%s length %d", __func__, param->length);
-  // DUMP8("%02x ", (param->data+i), len);
+
+  if (rx_callback) {
+    if (rx_callback(param->data, param->length)) {
+      return (KE_MSG_CONSUMED);
+    }
+  }
 
 #ifndef __INTERCONNECTION__
   BLE_custom_command_receive_data(param->data, param->length);
@@ -238,6 +241,10 @@ static int app_datapath_server_rx_data_received_handler(
 void app_datapath_server_register_tx_done(
     app_datapath_server_tx_done_t callback) {
   tx_done_callback = callback;
+}
+
+void app_datapath_server_register_rx_callback(app_datapath_server_rx_cb_t cb) {
+  rx_callback = cb;
 }
 
 /*

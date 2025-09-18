@@ -1,3 +1,11 @@
+ifeq ($(APP),micstream_ble)
+
+obj-y := micstream_ble/
+
+subdir-ccflags-y += -Iapps/micstream_ble/include
+
+else
+
 obj-y := audioplayers/ common/ main/ key/ pwl/ battery/ factory/
 
 ifeq ($(APP_TEST_AUDIO),1)
@@ -48,5 +56,7 @@ endif
 
 ifeq ($(A2DP_LDAC_ON),1)
 subdir-ccflags-y += -Ithirdparty/audio_codec_lib/ldac/inc
+endif
+
 endif
 

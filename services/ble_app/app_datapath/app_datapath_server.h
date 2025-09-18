@@ -72,6 +72,8 @@ typedef void(*app_datapath_server_tx_done_t)(void);
 
 typedef void(*app_datapath_server_activity_stopped_t)(void);
 
+typedef bool (*app_datapath_server_rx_cb_t)(const uint8_t *data, uint16_t len);
+
 /*
  * GLOBAL VARIABLES DECLARATIONS
  ****************************************************************************************
@@ -122,6 +124,8 @@ void app_datapath_server_register_tx_done(app_datapath_server_tx_done_t callback
 void app_datapath_server_control_notification(uint8_t conidx,bool isEnable);
 
 void app_datapath_server_mtu_exchanged_handler(uint8_t conidx, uint16_t mtu);
+
+void app_datapath_server_register_rx_callback(app_datapath_server_rx_cb_t cb);
 
 #ifdef __cplusplus
 }

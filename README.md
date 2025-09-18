@@ -36,6 +36,59 @@ bestool write-image out/open_source/open_source.bin --port /dev/ttyACM0
 bestool write-image out/open_source/open_source.bin --port /dev/ttyACM1
 ```
 
+## MicStream BLE streaming app
+
+The `micstream_ble` firmware captures mono PCM from the main microphone, encodes
+blocks using IMA-ADPCM, and streams the frames over BLE notifications (and
+mirrors them to UART0 at 2 000 000 baud).
+
+### Build
+
+```bash
+# Left bud
+APP=micstream_ble SIDE=L MICSTREAM_NODE_ID=1 ./build.sh
+
+# Right bud
+APP=micstream_ble SIDE=R MICSTREAM_NODE_ID=2 ./build.sh
+```
+
+The resulting image is written to `out/open_source/open_source.bin` after each
+build.
+
+### Flash
+
+Flash the generated binary with the existing helper:
+
+```bash
+./download.sh
+```
+
+### Runtime control
+
+* BLE service UUID: `7d8f7f7a-1b36-4e2e-9a77-4b6b6c0b9a01`
+  * Characteristic `AUDIO` (Notify) streams MicStream frames
+  * Characteristic `CTRL` (Write Without Response) accepts ASCII commands
+* UART0 (2 000 000 baud, 8N1) accepts the same commands.
+
+Available commands:
+
+* `START` – reset counters and begin capture
+* `STOP` – halt capture
+* `SET FS=<Hz>` – switch sample-rate between `16000` and `24000` Hz (capture
+  restarts automatically)
+
+### FAQ
+
+* **How do I change the node ID?** Pass `MICSTREAM_NODE_ID=<1..4>` on the
+  `build.sh` invocation (as in the build examples above). The value is baked
+  into the MicStream header.
+* **How do I switch the sampling rate?** Use the runtime command `SET FS=16000`
+  or `SET FS=24000` over either BLE CTRL or the UART console. The app will
+  restart capture with the new rate.
+* **Where do I find the binary after building?** Every build writes
+  `out/open_source/open_source.bin`, which is the image flashed by
+  `download.sh`.
+
 ## Changelist from stock open source SDK
 
 - Long hold (5 ish seconds) the button on the back when buds are in the case to force a device reboot (so it can be programmed)

@@ -1,5 +1,44 @@
 CHIP        ?= best2300p
 
+ifeq ($(APP),micstream_ble)
+export BLE := 0
+export IBRT := 0
+export ANC_APP := 0
+export ANC_FF_ENABLED := 0
+export ANC_FB_ENABLED := 0
+export ANC_WNR_ENABLED := 0
+export ANC_ASSIST_ENABLED := 0
+export VOICE_PROMPT := 0
+export PC_CMD_UART := 0
+export AUDIO_RESAMPLE := 0
+export APP_TEST_AUDIO := 0
+export VOICE_DETECTOR_EN := 0
+export APP_ANC_TEST := 0
+export TEST_OVER_THE_AIR := 0
+export TILE_DATAPATH_ENABLED := 0
+export AI_VOICE := 0
+export SMART_VOICE := 0
+export TWS_SYSTEM_ENABLED := 0
+export ANC_FB_CHECK := 0
+export SPEECH_TX_DC_FILTER := 0
+export SPEECH_TX_AEC2FLOAT := 0
+export SPEECH_TX_NS3 := 0
+export SPEECH_TX_2MIC_NS2 := 0
+export SPEECH_TX_COMPEXP := 0
+export SPEECH_TX_EQ := 0
+export SPEECH_TX_POST_GAIN := 0
+export SPEECH_RX_NS2FLOAT := 0
+export SPEECH_RX_EQ := 0
+export SPEECH_RX_POST_GAIN := 0
+export AUDIO_DRC := 0
+export AUDIO_DRC2 := 0
+
+CFLAGS_services/ble_profiles/datapath/datapathps/src/datapathps.o += \
+-DDATAPATH_SERVICE_UUID_128_BYTES=0x7a,0x7f,0x8f,0x7d,0x36,0x1b,0x2e,0x4e,0x9a,0x77,0x4b,0x6b,0x6c,0x0b,0x9a,0x01 \
+-DDATAPATH_TX_CHAR_VAL_UUID_128_BYTES=0x7a,0x7f,0x8f,0x7d,0x36,0x1b,0x2e,0x4e,0x9a,0x77,0x4b,0x6b,0x6c,0x0b,0x9a,0x02 \
+-DDATAPATH_RX_CHAR_VAL_UUID_128_BYTES=0x7a,0x7f,0x8f,0x7d,0x36,0x1b,0x2e,0x4e,0x9a,0x77,0x4b,0x6b,0x6c,0x0b,0x9a,0x03
+endif
+
 DEBUG       ?= 1
 
 MBED        ?= 0

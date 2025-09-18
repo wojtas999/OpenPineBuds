@@ -11,6 +11,7 @@ ccflags-y := -I$(obj)/inc
 
 ifeq ($(LIBC_ROM),1)
 CFLAGS_libc_rom.o += -Iutils/rom_utils
+CFLAGS_libc_rom.o += -Iutils/libc/inc
 
 EXCLUDE_OBJS := strsep.o strtok.o strncat.o strnicmp.o strstr.o memset.o memcpy.o memmove.o \
 				atoi.o strtol.o strtoul.o qsort.o bsearch.o \
@@ -26,6 +27,7 @@ else # !NOSTD
 obj-y := libc_rom.o
 
 CFLAGS_libc_rom.o += -Iutils/rom_utils
+CFLAGS_libc_rom.o += -Iutils/libc/inc
 # Avoid conflicting with libc in toolchain
 CFLAGS_libc_rom.o += -DNO_STRTOL
 CFLAGS_libc_rom.o += -DNO_STRTOUL
