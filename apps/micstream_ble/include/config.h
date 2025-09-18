@@ -1,0 +1,10 @@
+#pragma once
+
+#define MICSTREAM_FS_HZ         16000
+#define MICSTREAM_NSAMPLES      256
+#define MICSTREAM_CODEC_IMA     1
+#ifndef MICSTREAM_NODE_ID
+#define MICSTREAM_NODE_ID       3
+#endif
+#define MICSTREAM_UART_ID       HAL_UART_ID_0
+#define MICSTREAM_INPUT_PATH    AUD_INPUT_PATH_MAINMIC

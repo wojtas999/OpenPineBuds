@@ -32,21 +32,23 @@
 
 #if USE_128BIT_UUID
 
-#define datapath_service_uuid_128_content                                      \
-  {                                                                            \
-    0x12, 0x34, 0x56, 0x78, 0x90, 0x00, 0x00, 0x80, 0x00, 0x10, 0x00, 0x00,    \
-        0x00, 0x01, 0x00, 0x01                                                 \
-  }
-#define datapath_tx_char_val_uuid_128_content                                  \
-  {                                                                            \
-    0x12, 0x34, 0x56, 0x78, 0x91, 0x00, 0x00, 0x80, 0x00, 0x10, 0x00, 0x00,    \
-        0x00, 0x02, 0x00, 0x02                                                 \
-  }
-#define datapath_rx_char_val_uuid_128_content                                  \
-  {                                                                            \
-    0x12, 0x34, 0x56, 0x78, 0x92, 0x00, 0x00, 0x80, 0x00, 0x10, 0x00, 0x00,    \
-        0x00, 0x03, 0x00, 0x03                                                 \
-  }
+#ifndef DATAPATH_SERVICE_UUID_128_BYTES
+#define DATAPATH_SERVICE_UUID_128_BYTES                                         \
+  0x12, 0x34, 0x56, 0x78, 0x90, 0x00, 0x00, 0x80, 0x00, 0x10, 0x00, 0x00,      \
+      0x00, 0x01, 0x00, 0x01
+#endif
+
+#ifndef DATAPATH_TX_CHAR_VAL_UUID_128_BYTES
+#define DATAPATH_TX_CHAR_VAL_UUID_128_BYTES                                     \
+  0x12, 0x34, 0x56, 0x78, 0x91, 0x00, 0x00, 0x80, 0x00, 0x10, 0x00, 0x00,      \
+      0x00, 0x02, 0x00, 0x02
+#endif
+
+#ifndef DATAPATH_RX_CHAR_VAL_UUID_128_BYTES
+#define DATAPATH_RX_CHAR_VAL_UUID_128_BYTES                                     \
+  0x12, 0x34, 0x56, 0x78, 0x92, 0x00, 0x00, 0x80, 0x00, 0x10, 0x00, 0x00,      \
+      0x00, 0x03, 0x00, 0x03
+#endif
 
 #define ATT_DECL_PRIMARY_SERVICE_UUID                                          \
   { 0x00, 0x28 }
@@ -57,8 +59,8 @@
 #define ATT_DESC_CHAR_USER_DESCRIPTION_UUID                                    \
   { 0x01, 0x29 }
 
-static const uint8_t DATAPATH_SERVICE_UUID_128[ATT_UUID_128_LEN] =
-    datapath_service_uuid_128_content;
+static const uint8_t DATAPATH_SERVICE_UUID_128[ATT_UUID_128_LEN] = {
+    DATAPATH_SERVICE_UUID_128_BYTES};
 
 /// Full DATAPATH SERVER Database Description - Used to add attributes into the
 /// database
@@ -71,7 +73,7 @@ const struct attm_desc_128 datapathps_att_db[DATAPATHPS_IDX_NB] = {
     [DATAPATHPS_IDX_TX_CHAR] = {ATT_DECL_CHARACTERISTIC_UUID, PERM(RD, ENABLE),
                                 0, 0},
     // TX Characteristic Value
-    [DATAPATHPS_IDX_TX_VAL] = {datapath_tx_char_val_uuid_128_content,
+    [DATAPATHPS_IDX_TX_VAL] = {{DATAPATH_TX_CHAR_VAL_UUID_128_BYTES},
                                PERM(NTF, ENABLE) | PERM(RD, ENABLE),
                                PERM(RI, ENABLE) |
                                    PERM_VAL(UUID_LEN, PERM_UUID_128),
@@ -88,7 +90,7 @@ const struct attm_desc_128 datapathps_att_db[DATAPATHPS_IDX_NB] = {
     [DATAPATHPS_IDX_RX_CHAR] = {ATT_DECL_CHARACTERISTIC_UUID, PERM(RD, ENABLE),
                                 0, 0},
     // RX Characteristic Value
-    [DATAPATHPS_IDX_RX_VAL] = {datapath_rx_char_val_uuid_128_content,
+    [DATAPATHPS_IDX_RX_VAL] = {{DATAPATH_RX_CHAR_VAL_UUID_128_BYTES},
                                PERM(WRITE_REQ, ENABLE) |
                                    PERM(WRITE_COMMAND, ENABLE),
                                PERM(RI, ENABLE) |
