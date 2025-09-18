@@ -66,7 +66,7 @@ int ima_encode_block(ima_state_t *st, const int16_t *pcm, int nsamples, uint8_t 
 
         for (int n = 0; n < 2; ++n) {
             if (i + n >= nsamples) {
-                byte |= 0x0F;
+                byte |= 0x00;
                 continue;
             }
 

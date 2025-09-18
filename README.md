@@ -89,6 +89,17 @@ Available commands:
   `out/open_source/open_source.bin`, which is the image flashed by
   `download.sh`.
 
+### Test
+1. Flash on buds (./download.sh).
+2. Connect UART (TTL adapter, 2M baud, eg. minicom -D /dev/ttyUSB0 -b 2000000).
+3. Send "START" via UART – check logs (every 1s frames and sc count).
+4. For BLE: Use nRF Connect app (Android/iOS), scan, connect to buds (name probably BES?).
+   - Subscribe to notify on AUDIO char (UUID 7d8f...02).
+   - Send "START" on CTRL char (UUID 7d8f...03).
+   - Receive frames (28B header + ~128B ADPCM for 256 samples).
+5. Test SET FS=24000, capture restarts with new Fs.
+6. To decode ADPCM on PC: Use custom Python script (with IMA decoder) from UART/BLE data.
+
 ## Changelist from stock open source SDK
 
 - Long hold (5 ish seconds) the button on the back when buds are in the case to force a device reboot (so it can be programmed)

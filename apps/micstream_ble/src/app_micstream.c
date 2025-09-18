@@ -10,6 +10,7 @@
 #include "micstream_proto.h"
 #include "uart_ctrl.h"
 
+#include <stdlib.h>
 #include <stdbool.h>
 #include <string.h>
 
@@ -52,8 +53,8 @@ static void micstream_reset_counters(void) {
 static void micstream_log_timer_cb(void const *arg) {
     (void)arg;
     if (g_streaming) {
-        TRACE(2, "[micstream] frames=%u sc=%u", g_frames_sent,
-              (uint32_t)g_sc);
+        TRACE(2, "[micstream] frames=%u sc=%llu", g_frames_sent,
+              (unsigned long long)g_sc);
         g_frames_sent = 0;
     }
 }

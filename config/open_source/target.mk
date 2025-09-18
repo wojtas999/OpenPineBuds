@@ -1,7 +1,7 @@
 CHIP        ?= best2300p
 
 ifeq ($(APP),micstream_ble)
-export BLE := 0
+export BLE := 1
 export IBRT := 0
 export ANC_APP := 0
 export ANC_FF_ENABLED := 0
@@ -18,6 +18,9 @@ export TEST_OVER_THE_AIR := 0
 export TILE_DATAPATH_ENABLED := 0
 export AI_VOICE := 0
 export SMART_VOICE := 0
+export SPEECH_TX_NS3 := 0
+export SPEECH_TX_AEC := 0
+export SPEECH_TX_AGC := 0
 export TWS_SYSTEM_ENABLED := 0
 export ANC_FB_CHECK := 0
 export SPEECH_TX_DC_FILTER := 0
