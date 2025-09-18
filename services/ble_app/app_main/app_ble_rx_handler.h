@@ -16,6 +16,7 @@
 #ifndef __APP_BLE_RX_HANDLER_H__
 #define __APP_BLE_RX_HANDLER_H__
 
+#include <stdint.h>
 #include "rwapp_config.h"
 
 #ifdef __cplusplus
